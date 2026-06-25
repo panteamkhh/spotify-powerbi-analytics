@@ -12,15 +12,15 @@ The project focuses on data profiling, cleaning, transformation, and dashboard d
 
 ## 📌 Project Objectives
 
-✅ Explore and profile the dataset
+* Explore and profile the dataset
 
-✅ Clean and transform data using Power Query
+* Clean and transform data using Power Query
 
-✅ Create calculated columns and measures
+* Create calculated columns and measures
 
-✅ Build interactive visualizations
+* Build interactive visualizations
 
-✅ Generate meaningful insights from Spotify data
+* Generate meaningful insights from Spotify data
 
 ---
 
