@@ -1,135 +1,79 @@
-# 🎧 Spotify Power BI Mini Project
+## 🟢 Phase 1 — Data Exploration Summary
 
-![Power BI](https://img.shields.io/badge/Power%20BI-Data%20Analytics-F2C811?logo=powerbi\&logoColor=black)
-![Status](https://img.shields.io/badge/Status-Completed-success)
-![Dataset](https://img.shields.io/badge/Dataset-Spotify-green)
-![License](https://img.shields.io/badge/Learning-Project-blue)
-
-A mini **Data Analytics** project built with **Power BI** using Spotify tracks data.
-The project focuses on data profiling, cleaning, transformation, and dashboard development.
-
----
-
-## 📌 Project Objectives
-
-✅ Explore and profile the dataset
-
-✅ Clean and transform data using Power Query
-
-✅ Create calculated columns and measures
-
-✅ Build interactive visualizations
-
-✅ Generate meaningful insights from Spotify data
+### 📊 Dataset Overview
+- Total rows (raw): 114,001
+- Rows after cleaning empty records: 114,000
+- Rows after duplicate check: 114,000 (no significant change)
+- Total columns: 21
+- Dataset type: Spotify tracks audio features dataset
 
 ---
 
-## 🛠️ Tools & Technologies
-
-* Power BI
-* Power Query
-* Excel / CSV
-* Git & GitHub
-
----
-
-## 📂 Project Structure
-
-```text
-07-spotify-powerbi-mini-project/
-│
-├── data/
-│   └── spotify.csv
-│
-├── power-query/
-│   ├── append-demo.md
-│   ├── merge-demo.md
-│   └── transformations.md
-│
-├── dashboard/
-│   ├── spotify-dashboard.pbix
-│   ├── screenshots/
-│   └── dashboard-notes.md
-│
-├── report.md
-└── README.md
-```
+### 📂 Column List
+- track_id
+- artists
+- album_name
+- track_name
+- popularity
+- duration_ms
+- explicit
+- danceability
+- energy
+- key
+- loudness
+- mode
+- speechiness
+- acousticness
+- instrumentalness
+- liveness
+- valence
+- tempo
+- time_signature
+- track_genre
 
 ---
 
-## 🔍 Project Workflow
+### 🔍 Data Quality Assessment
 
-### 1️⃣ Data Profiling
+#### Duplicate Analysis
+- Small number of duplicate records detected
+- Most duplicate groups had counts of 1–2
+- No major duplication issue found
 
-* Examined column quality
-* Checked missing values
-* Identified duplicates
-* Reviewed data types
+#### Data Types
+- All columns have correct data types assigned
 
-### 2️⃣ Data Cleaning
-
-* Removed duplicate records
-* Fixed column formats
-* Handled inconsistencies
-
-### 3️⃣ Power Query Transformations
-
-* Filtering
-* Sorting
-* Custom Columns
-* Append Queries
-* Merge Queries
-
-### 4️⃣ Dashboard Development
-
-* Bar Charts
-* Column Charts
-* KPI Cards
-* Distribution Analysis
-* Interactive Filtering
+#### Missing Values
+- No significant missing values detected after cleaning empty rows
 
 ---
 
-## 📊 Dashboard Preview
+### 📊 Popularity Analysis
 
-### Main Dashboard
+- Min popularity: 0
+- Max popularity: 100
+- Average popularity: 33.23
+- Standard deviation: 22.3
 
-> Dashboard screenshots will be added here.
-
-```md
-![Dashboard](dashboard/screenshots/dashboard.png)
-```
-
----
-
-## 💡 Key Insights
-
-* Most tracks belong to specific genres.
-* Popularity distribution is highly uneven.
-* Some audio features show strong relationships with popularity.
-* Dataset contains a diverse range of music characteristics.
+#### Distribution Insight
+- Popularity distribution is highly skewed
+- Many tracks fall in the low popularity range (0–20)
+- Few tracks achieve very high popularity (80–100)
 
 ---
 
-## 🚀 Learning Outcomes
+### 🎧 Key Observations
 
-Through this project I practiced:
-
-* Data Cleaning
-* Power Query
-* Data Modeling
-* Data Visualization
-* Dashboard Design
-* Business Insight Generation
+- Dataset is large and rich in audio features
+- Strong variation exists in popularity values
+- Audio features provide strong potential for correlation analysis
+- Dataset is suitable for music analytics and dashboard development
 
 ---
 
-## 📁 Dataset Source
+### 🚀 Phase 1 Conclusion
 
-Spotify Tracks Dataset from Kaggle
-
----
-
-## 👩‍💻 Author
-
-Learning project for building a Data Analytics portfolio using Power BI.
+Dataset is clean, well-structured, and ready for:
+- Data transformation (Power Query)
+- Feature engineering
+- Dashboard development
