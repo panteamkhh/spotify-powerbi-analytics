@@ -36,7 +36,7 @@ The project focuses on data profiling, cleaning, transformation, and dashboard d
 ## 📂 Project Structure
 
 ```text
-07-spotify-powerbi-mini-project/
+07-spotify-powerbi/
 │
 ├── data/
 │   └── spotify.csv
