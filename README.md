@@ -5,7 +5,7 @@
 ![Dataset](https://img.shields.io/badge/Dataset-Spotify-green)
 ![License](https://img.shields.io/badge/Learning-Project-blue)
 
-A mini **Data Analytics** project built with **Power BI** using Spotify tracks data.
+A **Data Analytics** project built with **Power BI** using Spotify tracks data.
 The project focuses on data profiling, cleaning, transformation, and dashboard development.
 
 ---
