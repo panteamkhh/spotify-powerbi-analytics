@@ -1,79 +1,151 @@
-## 🟢 Phase 1 — Data Exploration Summary
+# 🎧 Spotify Power BI Project Report
 
-### 📊 Dataset Overview
-- Total rows (raw): 114,001
-- Rows after cleaning empty records: 114,000
-- Rows after duplicate check: 114,000 (no significant change)
-- Total columns: 21
-- Dataset type: Spotify tracks audio features dataset
+A structured data analytics project focused on profiling, cleaning, and transforming Spotify dataset using Power BI.
 
 ---
 
-### 📂 Column List
-- track_id
+# 🟢 Stage 1 — Data Profiling
+
+## 📌 Dataset Overview
+
+- Initial dataset: **114,000 rows**
+- Columns: **21**
+- Blank rows: **0**
+
+---
+
+## 📊 Data Types
+
+- All columns validated
+- No type issues detected
+
+---
+
+## 🔍 Profiling Tools Used
+
+- Column Quality
+- Column Distribution
+- Column Profile
+
+---
+
+## 🎯 Popularity Analysis
+
+| Metric          | Value |
+|-----------------|------:|
+| Min             | 0 |
+| Max             | 100 |
+| Average         | 33.23 |
+| Std Dev         | 22.3 |
+| Distinct Values | 101 |
+
+---
+
+## 🔁 Duplicate Analysis
+
+Duplicate investigation was performed step-by-step using different granularities:
+
+### Step 1 — Full Dataset Duplicates
+- **31,438 duplicate records identified**
+
+### Step 2 — Intermediate Deduplication Check
+- **29,491 duplicates identified**
+
+### Step 3 — Field-Level Duplicate Analysis
+
+Duplicate detection was refined using individual key columns:
+
+- `artists` → **31,438 duplicates**
+- `track_name` → **29,491 duplicates**
+- `album_name` → **24,039 duplicates**
+
+👉 Final deduplication strategy was based on the combined logic of:
 - artists
-- album_name
 - track_name
-- popularity
-- duration_ms
-- explicit
+- album_name
+
+---
+
+# 🟡 Stage 2 — Data Cleaning & Transformation
+
+## 🧹 Duplicate Removal
+
+- Rows before cleaning: **114,000**
+- Rows after cleaning: **~89,961**
+- Cleaning based on:
+  - artists
+  - track_name
+  - album_name
+
+---
+
+## 🎯 Feature Engineering
+
+### 📊 Conditional Column
+
+Created column:
+
+- `popularity_category`
+
+Rules:
+
+- 0–30 → Low
+- 31–70 → Medium
+- 71–100 → High
+
+---
+
+## 📊 Aggregation (Group By)
+
+Grouped by:
+
+- `track_genre`
+
+Generated metrics:
+
+- Track Count
+- Average Popularity
+
+---
+
+## 🔄 Data Reshaping (Unpivot)
+
+Audio feature columns transformed:
+
 - danceability
 - energy
-- key
-- loudness
-- mode
 - speechiness
 - acousticness
 - instrumentalness
 - liveness
 - valence
 - tempo
-- time_signature
-- track_genre
 
 ---
 
-### 🔍 Data Quality Assessment
+## 📌 Final Output Structure (Long Format)
 
-#### Duplicate Analysis
-- Small number of duplicate records detected
-- Most duplicate groups had counts of 1–2
-- No major duplication issue found
-
-#### Data Types
-- All columns have correct data types assigned
-
-#### Missing Values
-- No significant missing values detected after cleaning empty rows
+| artists | track_name | Audio Feature | Score |
+|---------|------------|---------------|------|
+| A | Song 1 | danceability | 0.72 |
+| A | Song 1 | energy | 0.81 |
 
 ---
 
-### 📊 Popularity Analysis
+# 🎯 Final Outcome
 
-- Min popularity: 0
-- Max popularity: 100
-- Average popularity: 33.23
-- Standard deviation: 22.3
+You now have 3 structured datasets:
 
-#### Distribution Insight
-- Popularity distribution is highly skewed
-- Many tracks fall in the low popularity range (0–20)
-- Few tracks achieve very high popularity (80–100)
+- spotify_clean → cleaned base dataset  
+- genre_summary → aggregated insights  
+- audio_features_long → unpivoted analytical dataset  
 
 ---
 
-### 🎧 Key Observations
+# 🚀 Project Status
 
-- Dataset is large and rich in audio features
-- Strong variation exists in popularity values
-- Audio features provide strong potential for correlation analysis
-- Dataset is suitable for music analytics and dashboard development
+The project is now at a stage where:
 
----
-
-### 🚀 Phase 1 Conclusion
-
-Dataset is clean, well-structured, and ready for:
-- Data transformation (Power Query)
-- Feature engineering
-- Dashboard development
+- ✔ Data Cleaning completed  
+- ✔ Feature Engineering completed  
+- ✔ Data Modeling is ready to begin  
