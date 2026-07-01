@@ -25,7 +25,7 @@ This document records all transformations applied in Power Query during the Spot
 ## Data Type Validation
 
 - All columns reviewed in Power Query Editor
-- No type mismatches detected
+- No data type issues detected
 - Numeric and categorical fields correctly assigned
 
 ---
@@ -68,13 +68,13 @@ Records were considered duplicates based on:
 
 ---
 
-# 🟡 Stage 2 — Transformations
+# 🟡 Stage 2 — Data Cleaning & Transformation
 
 ## Remove Duplicates Step
 
 - Input rows: 114,000
 - Output rows: ~89,961
-- Removed: 24,039
+- Removed: 24,039 rows
 
 Applied keys:
 - artists
@@ -108,7 +108,7 @@ Aggregations:
 
 ## Unpivot Transformation
 
-Columns converted to attribute-value structure:
+Columns converted into attribute-value structure:
 
 - danceability
 - energy
@@ -127,8 +127,8 @@ Fields:
 
 - artists
 - track_name
-- Attribute (Audio Feature)
-- Value (Score)
+- Audio Feature (Attribute)
+- Score (Value)
 
 ---
 
@@ -136,17 +136,70 @@ Fields:
 
 Final datasets produced:
 
-- spotify_clean (structured dataset)
-- genre_summary (aggregated dataset)
+- spotify_clean (clean structured dataset)
+- genre_summary (aggregated genre-level insights)
 - audio_features_long (long-format analytical dataset)
 
 ---
 
-## Status
+# 🔵 Stage 3 — Data Modeling
 
-✔ Data profiling completed  
-✔ Deduplication completed  
-✔ Feature engineering completed  
-✔ Data reshaping completed  
+## Objective
 
-Ready for Data Modeling stage.
+A simplified star-schema style model was created to enable structured and efficient analysis in Power BI.
+
+---
+
+## Model Structure
+
+The dataset was organized into three logical tables:
+
+- `spotify_clean` → Core fact table (track-level data)
+- `genre_summary` → Aggregated genre-level metrics
+- `audio_features_long` → Long-format audio feature analysis
+
+---
+
+## Relationships
+
+Two active relationships were created:
+
+### 1. Genre Relationship
+
+- `spotify_clean[track_genre]`
+→ `genre_summary[track_genre]`
+
+Purpose:
+- Enables genre-level aggregation and filtering
+
+---
+
+### 2. Audio Feature Relationship
+
+- `spotify_clean[track_id]`
+→ `audio_features_long[track_id]`
+
+Purpose:
+- Enables track-level feature analysis across multiple audio dimensions
+
+---
+
+## Modeling Principles
+
+- Star-schema inspired structure
+- One-to-many relationships
+- Single-direction filtering
+- Separation of raw, aggregated, and analytical layers
+
+---
+
+## Final Model Outcome
+
+The final semantic model enables:
+
+- Genre-based insights
+- Track-level analysis
+- Audio feature exploration
+- Scalable dashboard development
+
+---

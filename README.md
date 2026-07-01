@@ -34,11 +34,20 @@ The project focuses on transforming raw music data into structured analytical da
 - Genre-level aggregation
 - Unpivot transformation for audio features
 
-### 🔵 Stage 3 — Data Modeling (Upcoming)
-- Star schema design
-- Relationships setup
-- DAX measures
-- Dashboard optimization
+### 🔵 Stage 3 — Data Modeling
+
+- Designed a simplified star schema structure using three tables:
+  - `spotify_clean` (fact table)
+  - `genre_summary` (genre-level aggregation)
+  - `audio_features_long` (feature-level analysis)
+
+- Created relationships:
+  - `spotify_clean[track_genre]` → `genre_summary[track_genre]`
+  - `spotify_clean[track_id]` → `audio_features_long[track_id]`
+
+- Applied one-to-many, single-direction filtering for clean data flow
+
+- Model prepared for dashboard development and future DAX calculations
 
 ---
 

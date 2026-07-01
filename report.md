@@ -1,6 +1,6 @@
 # 🎧 Spotify Power BI Project Report
 
-A structured data analytics project focused on profiling, cleaning, and transforming Spotify dataset using Power BI.
+A structured data analytics project focused on profiling, cleaning, transformation, and modeling of Spotify dataset using Power BI.
 
 ---
 
@@ -16,8 +16,9 @@ A structured data analytics project focused on profiling, cleaning, and transfor
 
 ## 📊 Data Types
 
-- All columns validated
-- No type issues detected
+- All columns validated in Power Query
+- No data type issues detected
+- Numeric and categorical fields correctly assigned
 
 ---
 
@@ -45,21 +46,19 @@ A structured data analytics project focused on profiling, cleaning, and transfor
 
 Duplicate investigation was performed step-by-step using different granularities:
 
-### Step 1 — Full Dataset Duplicates
+### Step 1 — Full Dataset Scan
 - **31,438 duplicate records identified**
 
-### Step 2 — Intermediate Deduplication Check
+### Step 2 — Intermediate Validation
 - **29,491 duplicates identified**
 
-### Step 3 — Field-Level Duplicate Analysis
-
-Duplicate detection was refined using individual key columns:
+### Step 3 — Column-Level Inspection
 
 - `artists` → **31,438 duplicates**
 - `track_name` → **29,491 duplicates**
 - `album_name` → **24,039 duplicates**
 
-👉 Final deduplication strategy was based on the combined logic of:
+👉 Final deduplication strategy:
 - artists
 - track_name
 - album_name
@@ -72,7 +71,7 @@ Duplicate detection was refined using individual key columns:
 
 - Rows before cleaning: **114,000**
 - Rows after cleaning: **~89,961**
-- Cleaning based on:
+- Removed duplicates based on:
   - artists
   - track_name
   - album_name
@@ -110,7 +109,7 @@ Generated metrics:
 
 ## 🔄 Data Reshaping (Unpivot)
 
-Audio feature columns transformed:
+Audio feature columns transformed into long format:
 
 - danceability
 - energy
@@ -123,7 +122,7 @@ Audio feature columns transformed:
 
 ---
 
-## 📌 Final Output Structure (Long Format)
+## 📌 Final Output Structure
 
 | artists | track_name | Audio Feature | Score |
 |---------|------------|---------------|------|
@@ -132,20 +131,73 @@ Audio feature columns transformed:
 
 ---
 
-# 🎯 Final Outcome
+## 🎯 Stage 2 Result
 
-You now have 3 structured datasets:
+Generated datasets:
 
-- spotify_clean → cleaned base dataset  
-- genre_summary → aggregated insights  
-- audio_features_long → unpivoted analytical dataset  
+- spotify_clean → cleaned base dataset
+- genre_summary → aggregated genre insights
+- audio_features_long → long-format analytical dataset
 
 ---
 
-# 🚀 Project Status
+# 🔵 Stage 3 — Data Modeling
 
-The project is now at a stage where:
+## 🎯 Objective
 
-- ✔ Data Cleaning completed  
-- ✔ Feature Engineering completed  
-- ✔ Data Modeling is ready to begin  
+A simplified star-schema style data model was designed to support efficient analysis and visualization in Power BI.
+
+---
+
+## 🧩 Data Model Structure
+
+The model consists of three logical tables:
+
+- `spotify_clean` → Core fact table (track-level data)
+- `genre_summary` → Aggregated genre-level metrics
+- `audio_features_long` → Unpivoted audio feature dataset
+
+---
+
+## 🔗 Relationships
+
+### 1. Genre-Level Relationship
+
+- `spotify_clean[track_genre]`
+→ `genre_summary[track_genre]`
+
+Purpose:
+- Enables genre-based analysis and filtering
+
+---
+
+### 2. Track-Level Relationship
+
+- `spotify_clean[track_id]`
+→ `audio_features_long[track_id]`
+
+Purpose:
+- Enables detailed audio feature analysis per track
+
+---
+
+## 🧠 Modeling Principles
+
+- Star-schema inspired structure
+- Separation of raw, aggregated, and analytical layers
+- One-to-many relationships
+- Single-direction filtering
+- Clean semantic model design
+
+---
+
+## 📊 Final Data Model Outcome
+
+The model enables:
+
+- Genre-level insights
+- Track-level analysis
+- Audio feature exploration
+- Scalable dashboard development in Power BI
+
+---
