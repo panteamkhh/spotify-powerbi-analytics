@@ -1,42 +1,79 @@
-# 🎧 Spotify Power BI
+# 🎧 Spotify Power BI Analytics
 
-![Power BI](https://img.shields.io/badge/Power%20BI-Data%20Analytics-F2C811?logo=powerbi\&logoColor=black)
+![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi)
 ![Status](https://img.shields.io/badge/Status-Completed-success)
-![Dataset](https://img.shields.io/badge/Dataset-Spotify-green)
-![License](https://img.shields.io/badge/Learning-Project-blue)
-
-A **Data Analytics** project built with **Power BI** using Spotify tracks data.
-The project focuses on data profiling, cleaning, transformation, and dashboard development.
+![Type](https://img.shields.io/badge/Project-Data%20Analytics-blue)
 
 ---
 
-## 📌 Project Objectives
+## 📌 Project Overview
 
-* Explore and profile the dataset
+An end-to-end **Power BI analytics project** built on Spotify dataset.
 
-* Clean and transform data using Power Query
+The project focuses on transforming raw music data into structured analytical datasets through:
 
-* Create calculated columns and measures
-
-* Build interactive visualizations
-
-* Generate meaningful insights from Spotify data
-
----
-
-## 🛠️ Tools & Technologies
-
-* Power BI
-* Power Query
-* Excel / CSV
-* Git & GitHub
+- Data profiling & quality assessment
+- Data cleaning & deduplication
+- Feature engineering
+- Data transformation (including unpivot modeling)
+- Preparing data for dashboard-level insights
 
 ---
 
-## 📂 Project Structure
+## 🧭 Project Workflow (Stages)
+
+### 🟢 Stage 1 — Data Profiling
+- Data quality check (21 columns)
+- Missing values analysis
+- Duplicate detection (multi-level logic)
+- Statistical overview of popularity
+
+### 🟡 Stage 2 — Data Cleaning & Transformation
+- Duplicate removal using business keys
+- Feature engineering (popularity categorization)
+- Genre-level aggregation
+- Unpivot transformation for audio features
+
+### 🔵 Stage 3 — Data Modeling (Upcoming)
+- Star schema design
+- Relationships setup
+- DAX measures
+- Dashboard optimization
+
+---
+
+## 📊 Datasets Created
+
+| Dataset | Description |
+|--------|-------------|
+| `spotify_clean` | Cleaned dataset after deduplication |
+| `genre_summary` | Genre-level aggregated metrics |
+| `audio_features_long` | Unpivoted feature-level dataset |
+
+---
+
+## 💡 Key Insights
+
+- Most tracks fall in low-to-medium popularity range
+- Genre popularity varies significantly
+- Audio features enable deeper track-level analysis
+- Data reshaping improves analytical flexibility
+
+---
+
+## 🛠️ Tools Used
+
+- Power BI Desktop
+- Power Query (M Language)
+- Excel / CSV Dataset
+- Git & GitHub
+
+---
+
+## 📁 Repository Structure
 
 ```text
-07-spotify-powerbi/
+spotify-powerbi-analytics/
 │
 ├── data/
 │   └── spotify.csv
@@ -53,83 +90,3 @@ The project focuses on data profiling, cleaning, transformation, and dashboard d
 │
 ├── report.md
 └── README.md
-```
-
----
-
-## 🔍 Project Workflow
-
-### 1️⃣ Data Profiling
-
-* Examined column quality
-* Checked missing values
-* Identified duplicates
-* Reviewed data types
-
-### 2️⃣ Data Cleaning
-
-* Removed duplicate records
-* Fixed column formats
-* Handled inconsistencies
-
-### 3️⃣ Power Query Transformations
-
-* Filtering
-* Sorting
-* Custom Columns
-* Append Queries
-* Merge Queries
-
-### 4️⃣ Dashboard Development
-
-* Bar Charts
-* Column Charts
-* KPI Cards
-* Distribution Analysis
-* Interactive Filtering
-
----
-
-## 📊 Dashboard Preview
-
-### Main Dashboard
-
-> Dashboard screenshots will be added here.
-
-```md
-![Dashboard](dashboard/screenshots/dashboard.png)
-```
-
----
-
-## 💡 Key Insights
-
-* Most tracks belong to specific genres.
-* Popularity distribution is highly uneven.
-* Some audio features show strong relationships with popularity.
-* Dataset contains a diverse range of music characteristics.
-
----
-
-## 🚀 Learning Outcomes
-
-Through this project I practiced:
-
-* Data Cleaning
-* Power Query
-* Data Modeling
-* Data Visualization
-* Dashboard Design
-* Business Insight Generation
-
----
-
-## 📁 Dataset Source
-
-Spotify Tracks Dataset from Kaggle
-
----
-
-## 👩‍💻 Author
-
-Learning project for building a Data Analytics portfolio using Power BI.
