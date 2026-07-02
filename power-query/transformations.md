@@ -203,3 +203,16 @@ The final semantic model enables:
 - Scalable dashboard development
 
 ---
+
+# 🟣 Next Stage
+
+After completing the data preparation and modeling process, the generated datasets were loaded into Power BI for dashboard development.
+
+Dashboard implementation, KPI creation, and visualization design are documented separately in:
+
+- `report.md`
+- `README.md`
+
+No additional Power Query transformations were applied during the dashboard development stage.
+
+---

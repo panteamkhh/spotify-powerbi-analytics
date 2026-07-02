@@ -17,6 +17,7 @@ The project focuses on transforming raw music data into structured analytical da
 - Feature engineering
 - Data transformation (including unpivot modeling)
 - Preparing data for dashboard-level insights
+- Interactive dashboard development
 
 ---
 
@@ -49,6 +50,20 @@ The project focuses on transforming raw music data into structured analytical da
 
 - Model prepared for dashboard development and future DAX calculations
 
+### 🟣 Stage 4 — Dashboard Development
+
+- Designed an interactive Power BI dashboard
+- Built 4 KPI cards for executive summary
+- Created 7 business-oriented visualizations:
+  - Popularity Distribution
+  - Genre Analysis
+  - Top Artists
+  - Top Tracks
+  - Audio Feature Comparison
+  - Audio Features vs Popularity
+  - Genre vs Audio Features
+- Applied a consistent dark theme and business-focused layout
+
 ---
 
 ## 📊 Datasets Created
@@ -66,7 +81,8 @@ The project focuses on transforming raw music data into structured analytical da
 - Most tracks fall in low-to-medium popularity range
 - Genre popularity varies significantly
 - Audio features enable deeper track-level analysis
-- Data reshaping improves analytical flexibility
+- Relationships between audio features and popularity can be explored visually
+- Interactive dashboards improve analytical exploration
 
 ---
 

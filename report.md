@@ -189,6 +189,71 @@ Purpose:
 - Single-direction filtering
 - Clean semantic model design
 
+
+# 🟣 Stage 4 — Dashboard Development
+
+## 🎯 Objective
+
+Develop an interactive Power BI dashboard to transform the prepared datasets into business insights.
+
+---
+
+## 📋 Dashboard Planning
+
+The dashboard was designed around seven business questions before implementation to ensure a consistent layout and minimize redesign.
+
+---
+
+## 📊 Dashboard KPIs
+
+| KPI | Value |
+|------|------:|
+| Total Tracks | 89.74K |
+| Total Artists | 31.43K |
+| Total Genres | 113 |
+| Average Popularity | 33.20 |
+
+---
+
+## 📈 Dashboard Visualizations
+
+| ID | Analysis | Visual | Dataset |
+|----|----------|--------|---------|
+| Q1 | Popularity Distribution | Donut Chart | `spotify_clean` |
+| Q2 | Genre Analysis | Horizontal Bar Chart | `spotify_clean` |
+| Q3 | Top Artists | Horizontal Bar Chart | `spotify_clean` |
+| Q4 | Top Tracks | Table | `spotify_clean` |
+| Q5 | Audio Feature Comparison | Horizontal Bar Chart | `audio_features_long` |
+| Q6 | Audio Features vs Popularity | Scatter Plot | `spotify_clean` |
+| Q7 | Genre vs Audio Features | Matrix | `audio_features_long` |
+
+---
+
+## 🎨 Dashboard Design
+
+Applied design principles:
+
+- Dark theme
+- KPI cards
+- Consistent typography
+- Interactive visualizations
+- Clear visual hierarchy
+- Business-oriented layout
+
+---
+
+## 🎯 Stage 4 Result
+
+The dashboard supports:
+
+- Popularity analysis
+- Genre comparison
+- Artist ranking
+- Track exploration
+- Audio feature comparison
+- Feature-popularity relationship analysis
+- Genre-based audio feature exploration
+
 ---
 
 ## 📊 Final Data Model Outcome
