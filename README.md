@@ -51,11 +51,7 @@ Unlike a "charts-only" portfolio piece, this project deliberately covers the ent
 <table>
 <tr>
 <td width="50%"><img src="dashboard/screenshots/avg-audio-feature-score.png" alt="Average audio feature score"><br><div align="center"><sub><b>Audio feature profile</b></sub></div></td>
-<td width="50%"><img src="dashboard/screenshots/energy-vs-popularity.png" alt="Energy vs popularity scatter"><br><div align="center"><sub><b>Energy vs. popularity</b></sub></div></td>
-</tr>
-<tr>
-<td width="50%"><img src="dashboard/screenshots/genre-vs-popularity.png" alt="Genre vs popularity"><br><div align="center"><sub><b>Genre performance</b></sub></div></td>
-<td width="50%"><img src="dashboard/screenshots/tracks-by-genre.png" alt="Tracks per genre"><br><div align="center"><sub><b>Catalog depth by genre</b></sub></div></td>
+<td width="50%"><img src="dashboard/screenshots/energy-vs-popularity.png" alt="Genre-level energy vs popularity"><br><div align="center"><sub><b>Energy vs. popularity (genre level)</b></sub></div></td>
 </tr>
 </table>
 
@@ -63,10 +59,11 @@ Unlike a "charts-only" portfolio piece, this project deliberately covers the ent
 
 ## ✨ Highlights
 
-- 🧹 **Deduplication that mattered** — a composite key (`artists` + `track_name` + `album_name`) removed **24,039 duplicate rows**, shrinking the catalog from 114,000 → ~89,961 tracks.
+- 🧹 **Deduplication that mattered** — deduplicating to one row per unique `track_id` removed **24,259 rows (21.3%)**, shrinking the catalog from 114,000 → **89,741** tracks.
+- 🔍 **Independently audited** — every KPI and visual re-derived from the raw CSV; findings and fixes in [`dashboard/data-validation.md`](dashboard/data-validation.md).
 - 🏗️ **Real semantic model** — three tables kept at their natural grain and joined through relationships, not flattened Power Query merges (no row-duplication blow-up).
 - 🧮 **DAX measure layer** — a full library of filter-context-aware measures ([`dax/measures.md`](dax/measures.md)), going beyond one-time Power Query aggregations.
-- 🎨 **Designed dashboard** — dark theme, Spotify-green accent, KPI-first layout, and cross-filtering across all seven visuals.
+- 🎨 **Designed dashboard** — dark KPI cards with a Spotify-green accent on a light canvas, KPI-first layout, and cross-filtering across the visuals.
 - 📝 **Documented decisions** — every transformation, design choice, and trade-off is written down, including *why* Merge/Append were set aside.
 
 ---
@@ -147,6 +144,7 @@ spotify-powerbi-analytics/
 ├── dashboard/
 │   ├── spotify-dashboard.pbix       # Power BI report file
 │   ├── dashboard-notes.md           # Design rationale per visual
+│   ├── data-validation.md           # QA audit of numbers & visuals
 │   └── screenshots/                 # Exported page & visual views
 │
 ├── CHANGELOG.md                     # Project history
@@ -205,6 +203,7 @@ Full analysis in [`report.md`](report.md) → [Section 5](report.md#5-key-findin
 | [`power-query/append-demo.md`](power-query/append-demo.md) | Append Queries technique reference |
 | [`dax/measures.md`](dax/measures.md) | DAX measure library |
 | [`dashboard/dashboard-notes.md`](dashboard/dashboard-notes.md) | Visual-by-visual design rationale |
+| [`dashboard/data-validation.md`](dashboard/data-validation.md) | Independent data QA & chart audit |
 | [`CHANGELOG.md`](CHANGELOG.md) | Project history |
 
 ---

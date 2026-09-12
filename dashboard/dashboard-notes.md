@@ -69,7 +69,7 @@ Placed top-of-page, left-to-right, so scale (tracks/artists/genres) is establish
 
 ##  Visual-by-Visual Notes
 
-**Q1 — Popularity Distribution (Donut):** buckets `popularity_category` (Low/Medium/High) rather than raw popularity, so the shape of the catalog is legible at a glance instead of a dense histogram.
+**Q1 — Popularity Distribution (Donut):** buckets `popularity_category` (Low/Medium/High) rather than raw popularity, so the shape of the catalog is legible at a glance instead of a dense histogram. Verified counts: Low 41.65K, Medium 44.96K, High 3.13K. ⚠️ An earlier build had the **Low/Medium labels swapped** and used 71 as the High boundary — corrected to **0–30 / 31–69 / 70–100**, with a sort column so the legend reads Low → Medium → High. See [`data-validation.md`](data-validation.md).
 
 **Q2 — Genre Analysis (Horizontal Bar):** horizontal orientation chosen because genre names are long strings — vertical bars would force rotated axis labels, which are harder to scan.
 
@@ -85,21 +85,27 @@ Placed top-of-page, left-to-right, so scale (tracks/artists/genres) is establish
 
 ---
 
+## 🔍 Data QA
+
+Every KPI and visual was re-derived from the raw CSV independently of the report. The audit, verified numbers, and the exact Power BI fixes are in [`data-validation.md`](data-validation.md). Verified so far: all four KPI cards, the genre ranking, and the audio-feature averages match the source data.
+
+---
+
 ##  Screenshots
 
 See `screenshots/` for exported page views. Current exports:
 
-| File | View |
-|---|---|
-| `dashboard-overview.png` | Executive page — KPI row + popularity & genre |
-| `dashboard-detail.png` | Detail page — top tracks, genre matrix, scatter |
-| `model-view.png` | Semantic model / relationships |
-| `avg-audio-feature-score.png` | Audio feature comparison |
-| `energy-vs-popularity.png` | Energy vs. popularity scatter |
-| `genre-vs-popularity.png` | Genre performance |
-| `tracks-by-genre.png` | Catalog depth by genre |
+| File | View | Used in README |
+|---|---|---|
+| `dashboard-overview.png` | Executive page — KPI row + popularity & genre | ✅ |
+| `model-view.png` | Semantic model / relationships | ✅ |
+| `avg-audio-feature-score.png` | Audio feature comparison (verified) | ✅ |
+| `energy-vs-popularity.png` | Genre-level energy vs. popularity (verified) | ✅ |
+| `dashboard-detail.png` | Detail page — top tracks, genre matrix, scatter | ❌ excluded |
+| `genre-vs-popularity.png` | Exploratory — wrong `Sum` aggregation, needs rebuild | ❌ excluded |
+| `tracks-by-genre.png` | Exploratory — values OK, sort needs verification | ❌ excluded |
 
-(Add updated exports here whenever the dashboard visuals change materially.)
+(Re-export and re-check any screenshot after the fixes in [`data-validation.md`](data-validation.md).)
 
 
 ---
