@@ -135,6 +135,7 @@ spotify-powerbi-analytics/
 │
 ├── power-query/
 │   ├── transformations.md           # Full cleaning & reshaping log
+│   ├── corrected-queries.md         # Paste-ready corrected M pipeline
 │   ├── merge-demo.md                # Merge Queries — evaluated, not applied
 │   └── append-demo.md               # Append Queries — evaluated, not applied
 │
@@ -199,6 +200,7 @@ Full analysis in [`report.md`](report.md) → [Section 5](report.md#5-key-findin
 | [`report.md`](report.md) | Full case study: methodology, findings, limitations |
 | [`data/README.md`](data/README.md) | Dataset dictionary — all 21 columns, grain and caveats |
 | [`power-query/transformations.md`](power-query/transformations.md) | Step-by-step Power Query log |
+| [`power-query/corrected-queries.md`](power-query/corrected-queries.md) | Paste-ready corrected M pipeline |
 | [`power-query/merge-demo.md`](power-query/merge-demo.md) | Merge Queries technique reference |
 | [`power-query/append-demo.md`](power-query/append-demo.md) | Append Queries technique reference |
 | [`dax/measures.md`](dax/measures.md) | DAX measure library |
