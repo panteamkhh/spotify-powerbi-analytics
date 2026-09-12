@@ -5,6 +5,21 @@ The format is inspired by [Keep a Changelog](https://keepachangelog.com/en/1.1.0
 
 ---
 
+## [2026-09-12] — Data validation & chart audit
+
+### Added
+- `dashboard/data-validation.md` — independent QA of every KPI and visual, re-derived from the raw CSV with pandas, including a chart-by-chart audit and a Power BI fix checklist.
+
+### Fixed
+- Corrected the duplicate-handling figures: **24,259 rows removed**, leaving **89,741** unique tracks (was documented as 24,039 / 89,961).
+- Corrected `popularity_category` to **Low 0–30 / Medium 31–69 / High 70–100** and documented the Low/Medium label swap plus the required sort column.
+- Replaced the raw-only popularity stats with raw **and** cleaned values throughout the docs.
+
+### Changed
+- Removed the unsound detail-page visuals (`Sum` of averages, mis-aggregated scatter) from the README gallery.
+
+---
+
 ## [2026-09-12] — Documentation & DAX overhaul
 
 ### Added
