@@ -9,7 +9,7 @@
 
 ## Executive Summary
 
-This project takes a raw, heavily-duplicated Spotify tracks export and turns it into a governed analytical model and an interactive dashboard. Of the original 114,000 rows, roughly 21% (24,039 rows) were duplicates and were removed using a composite key of artist, track name, and album. The remaining ~89,961 tracks were reshaped into three purpose-built tables — a cleaned fact table, a genre-level summary, and a long-format audio-feature table — connected through a relationship model rather than flattened joins, in order to keep each table at its natural grain.
+This project takes a raw, heavily-duplicated Spotify tracks export and turns it into a governed analytical model and an interactive dashboard. The raw file holds 114,000 rows — exactly 114 genres × 1,000 tracks. Deduplicating to one row per unique `track_id` removed 24,259 rows (21.3%), leaving **89,741 tracks** that were reshaped into a cleaned fact table, a genre-level summary, and a long-format audio-feature table — connected through a relationship model rather than flattened joins, in order to keep each table at its natural grain. (The genre summary was aggregated on a slightly different composite key, a 0.4% base mismatch documented in [`dashboard/data-validation.md`](dashboard/data-validation.md).)
 
 The resulting dashboard answers seven core business questions around popularity, genre performance, and audio characteristics. The headline finding: popularity is long-tailed and genre-dependent, and no single audio feature explains it on its own — see [Section 5](#5-key-findings) for the full breakdown.
 
@@ -36,14 +36,15 @@ The project also defines an explicit **DAX measure layer** (see [Section 3.4](#3
 | Data type issues | None detected — all columns validated in Power Query Editor |
 | Profiling tools used | Column Quality, Column Distribution, Column Profile |
 
-**Popularity field, at a glance:**
+**Popularity field, at a glance (raw feed):**
 
 | Metric | Value |
 |---|---:|
 | Min | 0 |
 | Max | 100 |
-| Mean | 33.23 |
-| Std. Dev. | 22.3 |
+| Mean | 33.24 |
+| Mean (cleaned) | 33.20 |
+| Std. Dev. | 22.31 |
 | Distinct values | 101 |
 
 This distribution — a mean well below the midpoint of the 0–100 scale — is the first signal that popularity in this catalog is not evenly spread, a point returned to in the findings below.
@@ -54,19 +55,18 @@ This distribution — a mean well below the midpoint of the 0–100 scale — is
 
 ### 3.1 Duplicate Resolution
 
-Duplicates were investigated incrementally rather than resolved in one pass, to make sure the final key was actually justified rather than assumed:
+Duplicates were investigated per column first, then resolved with a single rule that was checked against the source data:
 
-- A full-dataset scan flagged **31,438** duplicate records.
-- A secondary, narrower check found **29,491** matches.
-- Column-level inspection then isolated where the overlap was coming from: `artists` (31,438), `track_name` (29,491), `album_name` (24,039).
-
-The final rule combined all three fields (`artists` + `track_name` + `album_name`) as the deduplication key, since any single field alone over- or under-counted true duplicates. This removed 24,039 rows, taking the dataset from 114,000 to approximately **89,961** rows.
+- **No fully identical rows** exist in the export — every duplicate is a partial one.
+- Rows that repeat a value, per column: `artists` **82,563** · `track_name` **40,398** · `album_name` **67,421** · `track_id` **24,259**.
+- The production fact table is deduplicated to **one row per unique `track_id`**, which removed 24,259 rows (21.3%) and took the dataset from 114,000 to **89,741** rows.
+- A composite key (`artists` + `track_name` + `album_name`) was also evaluated: it yields **89,378** rows and is the basis of `genre_summary`. The two keys differ by 363 rows; reconciling them is tracked in [`dashboard/data-validation.md`](dashboard/data-validation.md).
 
 ### 3.2 Feature Engineering & Reshaping
 
 Two structural changes were made to support downstream analysis:
 
-- **`popularity_category`** — a conditional column bucketing the continuous `popularity` score into Low (0–30), Medium (31–70), and High (71–100), so the KPI-level story doesn't require every viewer to interpret a raw 0–100 number.
+- **`popularity_category`** — a conditional column bucketing the continuous `popularity` score into Low (0–30), Medium (31–69), and High (70–100), so the KPI-level story doesn't require every viewer to interpret a raw 0–100 number. (An earlier build had the Low/Medium labels swapped; the corrected rule and a sort-order column are documented in [`dashboard/data-validation.md`](dashboard/data-validation.md).)
 - **Unpivot of audio features** — the eight audio-feature columns (`danceability`, `energy`, `speechiness`, `acousticness`, `instrumentalness`, `liveness`, `valence`, `tempo`) were converted from wide to long format, producing a `(track, Audio Feature, Score)` structure. This is what later allows all eight features to be compared in a single visual instead of eight separate ones.
 
 A `Group By` on `track_genre` produced genre-level Track Count and Average Popularity — the basis for the `genre_summary` table.
@@ -130,14 +130,14 @@ The dashboard page was planned around seven business questions before any visual
 | Q6 | Do audio features predict popularity? | Scatter Plot | `spotify_clean` |
 | Q7 | How does each genre's audio profile differ? | Matrix | `audio_features_long` |
 
-Design language: dark theme, consistent typography, and a KPI-first / detail-second layout. Full rationale for color choices and per-visual design decisions is in `dashboard/dashboard-notes.md` — kept separate from this report so design iteration doesn't require touching the analytical write-up.
+Design language: dark KPI cards with a Spotify-green accent on a light canvas, consistent typography, and a KPI-first / detail-second layout. Full rationale for color choices and per-visual design decisions is in `dashboard/dashboard-notes.md` — kept separate from this report so design iteration doesn't require touching the analytical write-up.
 
 ---
 
 ## 5. Key Findings
 
 **Popularity is long-tailed, not evenly distributed.**
-A mean of 33.23 against a 0–100 scale, with a standard deviation of 22.3, means most tracks sit well below the midpoint and very few reach the 70+ "hit" range.
+A cleaned mean of 33.20 against a 0–100 scale, with a standard deviation of ~20.6, means most tracks sit well below the midpoint and very few reach the 70+ "hit" range — only about 3.5% of the catalog.
 
 **Genre is a real differentiator, not noise.**
 Genre-level averages split clearly into groups that sit persistently above vs. below the 33.2 catalog-wide average — genre is one of the first useful filters in any popularity analysis on this data.
@@ -159,9 +159,9 @@ Roughly 21% of the raw rows were duplicates. Any KPI or genre count computed bef
 
 - **DAX layer is documented, not yet loaded in the published `.pbix`** — the measure library in `dax/measures.md` is defined and paste-ready, but the exported `.pbix` and its screenshots still reflect the implicit Power Query aggregations. Loading the measures is what unlocks the dynamic, filter-context-aware calculations described in [Section 3.4](#34-dax-measure-layer).
 - **No time dimension** — the source data has no reliable release-date field, so no trend-over-time analysis was attempted; the Q6 scatter plot is a snapshot, not a trend.
-- **Deduplication key is a judgment call** — `artists` + `track_name` + `album_name` was chosen after inspection, but a small number of legitimately distinct tracks (e.g., a re-recording under an identical title) could theoretically be collapsed by this rule. This was not separately audited.
+- **Deduplication base is not fully unified** — the fact table is keyed on unique `track_id` (89,741 rows) while `genre_summary` and `audio_features_long` were aggregated on a composite key (89,378 rows). The 0.4% mismatch means genre totals do not reconcile exactly with the headline `Total Tracks`; applying one key across all three tables is the recommended fix and is tracked in [`dashboard/data-validation.md`](dashboard/data-validation.md).
 - **Popularity is a platform-provided score**, not independently validated — its underlying methodology is external to this project.
 
 ---
 
-*Supporting technical references: `power-query/transformations.md` (full transformation log), `power-query/merge-demo.md` and `power-query/append-demo.md` (technique evaluations), `dax/measures.md` (DAX measure library), `dashboard/dashboard-notes.md` (design rationale).*
+*Supporting technical references: [`dashboard/data-validation.md`](dashboard/data-validation.md) (independent QA of the numbers and visuals), `power-query/transformations.md` (full transformation log), `power-query/merge-demo.md` and `power-query/append-demo.md` (technique evaluations), `dax/measures.md` (DAX measure library), `dashboard/dashboard-notes.md` (design rationale).*

@@ -32,43 +32,36 @@ This document records every transformation applied in Power Query during data pr
 
 ---
 
-## Statistical Summary — Popularity
+## Statistical Summary — Popularity (raw feed)
 
 - Min: 0
 - Max: 100
-- Mean: 33.23
-- Std Dev: 22.3
+- Mean: 33.24
+- Mean after cleaning: 33.20
+- Std Dev: 22.31
 - Distinct: 101
 
 ---
 
 ## Duplicate Inspection Process
 
-Duplicate detection was performed incrementally:
+Duplicate detection was performed column by column, then verified against the source file:
 
-### Full Dataset Scan
-- 31,438 duplicate records identified
+### Fully Identical Rows
+- 0 — every duplicate in this export is a partial one
 
-### Secondary Check
-- 29,491 duplicate matches identified
+### Repeated Rows per Column (rows minus distinct values)
 
-### Column-Level Inspection
-
-- artists → 31,438 duplicates observed
-- track_name → 29,491 duplicates observed
-- album_name → 24,039 duplicates observed
+- artists → 82,563 repeated rows
+- track_name → 40,398 repeated rows
+- album_name → 67,421 repeated rows
+- track_id → 24,259 repeated rows
 
 ---
 
 ## Final Deduplication Rule
 
-Records were considered duplicates based on:
-
-- artists
-- track_name
-- album_name
-
-No single column was used alone — each was checked independently first so the combined rule was a deliberate choice, not a default.
+The production fact table is deduplicated to **one row per unique `track_id`**. A composite key of `artists` + `track_name` + `album_name` was also evaluated (it yields 89,378 rows and is the basis of `genre_summary`); the 363-row difference between the two keys is tracked in `../dashboard/data-validation.md`.
 
 ---
 
@@ -77,13 +70,11 @@ No single column was used alone — each was checked independently first so the 
 ## Remove Duplicates Step
 
 - Input rows: 114,000
-- Output rows: ~89,961
-- Removed: 24,039 rows
+- Output rows: 89,741
+- Removed: 24,259 rows (21.3%)
 
-Applied keys:
-- artists
-- track_name
-- album_name
+Applied key:
+- track_id (one row per unique track)
 
 ---
 
@@ -94,8 +85,10 @@ Column: `popularity_category`
 Logic:
 
 - 0–30 → Low
-- 31–70 → Medium
-- 71–100 → High
+- 31–69 → Medium
+- 70–100 → High
+
+> A sort column (`low = 1`, `medium = 2`, `high = 3`) should be set as the *Sort by column* for `popularity_category`, so the donut legend reads Low → Medium → High. An earlier build had the Low/Medium labels swapped — see `../dashboard/data-validation.md`.
 
 ---
 
