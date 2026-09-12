@@ -220,4 +220,6 @@ Dashboard implementation, KPI creation, and visualization design are documented 
 
 No additional Power Query transformations were applied during the dashboard development stage. The analytical measures that sit on top of this model are DAX (not Power Query) and are documented separately in `../dax/measures.md` — keeping the transformation log focused on data preparation and the measure layer focused on filter-context calculations.
 
+> **Corrected pipeline:** the verified, paste-ready version of these queries (single dedup key, corrected `popularity_category`, genre summary, unpivot) is in [`corrected-queries.md`](corrected-queries.md). It supersedes the early duplicate-inspection figures below whenever they disagree.
+
 ---
