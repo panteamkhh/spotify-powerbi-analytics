@@ -31,6 +31,21 @@ Tracks per Artist =
 DIVIDE ( [Total Tracks], [Total Artists] )
 ```
 
+```dax
+Average Duration (minutes) =
+DIVIDE ( AVERAGE ( spotify_clean[duration_ms] ), 60000 )
+```
+
+```dax
+Explicit Tracks =
+CALCULATE ( [Total Tracks], spotify_clean[explicit] = TRUE () )
+```
+
+```dax
+% Explicit Tracks =
+DIVIDE ( [Explicit Tracks], [Total Tracks] )
+```
+
 ---
 
 ## 02 · Popularity Analysis
@@ -83,6 +98,21 @@ CALCULATE ( [Average Popularity], spotify_clean[popularity_category] = "high" )
 ```dax
 Popularity vs Catalog Average =
 [Average Popularity] - CALCULATE ( [Average Popularity], ALL ( spotify_clean ) )
+```
+
+```dax
+Tracks Above 70 Popularity =
+CALCULATE ( [Total Tracks], spotify_clean[popularity] > 70 )
+```
+
+```dax
+Tracks Below 30 Popularity =
+CALCULATE ( [Total Tracks], spotify_clean[popularity] < 30 )
+```
+
+```dax
+Hit Rate (popularity > 70) =
+DIVIDE ( [Tracks Above 70 Popularity], [Total Tracks] )
 ```
 
 > **Why this matters:** `Popularity vs Catalog Average` is *filter-context aware* — it recalculates against the 33.2 catalog mean for whatever the current slicer selection is. This is exactly the kind of calculation a static Power Query column cannot express.
@@ -257,8 +287,10 @@ RANKX ( ALL ( spotify_clean[artists] ), [Average Popularity], , DESC, DENSE )
 | Measure | Format string |
 |---|---|
 | `Total Tracks` / `Total Artists` / `Total Albums` / `Total Genres` | `#,##0` |
+| `Explicit Tracks` / `Tracks Above 70 Popularity` / `Tracks Below 30 Popularity` | `#,##0` |
+| `Average Duration (minutes)` | `0.0` |
 | `Average Popularity` / `Median Popularity` / `Min/Max Popularity` | `0.00` |
-| `% High Popularity` | `0.0%` |
+| `% High Popularity` / `% Explicit Tracks` / `Hit Rate (popularity > 70)` | `0.0%` |
 | `Average Feature Score` + feature measures | `0.00` |
 | `Popularity vs Catalog Average` / `Genre vs Catalog Average` | `+0.00;-0.00;0.00` |
 
