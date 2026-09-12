@@ -132,6 +132,7 @@ RETURN
 spotify-powerbi-analytics/
 │
 ├── data/
+│   ├── README.md                    # Dataset dictionary (21 columns)
 │   └── raw/
 │       └── spotify.csv              # 114,000 × 21 source dataset
 │
@@ -148,6 +149,8 @@ spotify-powerbi-analytics/
 │   ├── dashboard-notes.md           # Design rationale per visual
 │   └── screenshots/                 # Exported page & visual views
 │
+├── CHANGELOG.md                     # Project history
+├── LICENSE                          # MIT
 ├── report.md                        # Full analytics case-study report
 └── README.md
 ```
@@ -196,11 +199,26 @@ Full analysis in [`report.md`](report.md) → [Section 5](report.md#5-key-findin
 | Document | What it covers |
 |---|---|
 | [`report.md`](report.md) | Full case study: methodology, findings, limitations |
+| [`data/README.md`](data/README.md) | Dataset dictionary — all 21 columns, grain and caveats |
 | [`power-query/transformations.md`](power-query/transformations.md) | Step-by-step Power Query log |
 | [`power-query/merge-demo.md`](power-query/merge-demo.md) | Merge Queries technique reference |
 | [`power-query/append-demo.md`](power-query/append-demo.md) | Append Queries technique reference |
 | [`dax/measures.md`](dax/measures.md) | DAX measure library |
 | [`dashboard/dashboard-notes.md`](dashboard/dashboard-notes.md) | Visual-by-visual design rationale |
+| [`CHANGELOG.md`](CHANGELOG.md) | Project history |
+
+---
+
+## 🙌 Acknowledgements
+
+- Dataset: public **Spotify Tracks Dataset** (Kaggle) — 114,000 tracks.
+- Chart design inspired by the Spotify brand palette.
+
+---
+
+## 📄 License
+
+Released under the [MIT License](LICENSE) © 2026 Panteamkhh.
 
 ---
 
