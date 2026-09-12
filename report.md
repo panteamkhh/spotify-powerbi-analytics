@@ -1,9 +1,9 @@
 # Spotify Catalog Analytics — Project Report
 
 **Type:** Data Analytics Case Study
-**Tool Stack:** Power BI Desktop, Power Query (M)
+**Tool Stack:** Power BI Desktop, Power Query (M), DAX
 **Dataset:** Spotify Tracks (114,000 rows, 21 columns)
-**Author's note:** first structured Power BI project; DAX not yet applied — all metrics are computed upstream in Power Query.
+**Author's note:** first structured Power BI project; covers the full workflow from Power Query cleaning through data modeling, a documented DAX measure layer, and dashboard delivery.
 
 ---
 
@@ -22,7 +22,7 @@ The goal of this project was twofold:
 1. Build real fluency with the *pre-dashboard* half of Power BI — profiling, cleaning, and modeling — since this is where most analytical judgment calls actually happen, and where a raw export usually falls apart if skipped.
 2. Produce a dashboard that could stand on its own as a business deliverable: a small set of clear KPIs, seven focused visuals, and a consistent design language, rather than an unstructured collection of charts.
 
-DAX was intentionally out of scope for this iteration — every KPI and aggregation here comes from Power Query transformations, not measures. That boundary is called out explicitly in [Section 6](#6-limitations--assumptions) rather than left implicit.
+The project also defines an explicit **DAX measure layer** (see [Section 3.4](#34-dax-measure-layer)) so that headline metrics recalculate against the current filter context, instead of being frozen as one-time Power Query aggregations. The measure library — organized into six display folders with suggested format strings — lives in [`dax/measures.md`](dax/measures.md).
 
 ---
 
@@ -88,6 +88,21 @@ They're connected with two single-direction, one-to-many relationships:
 
 Merge and Append were both deliberately evaluated and set aside in favor of this relationship model — flattening any of these tables together would either duplicate genre-level values across every matching track row or mix tables of different grain into one, which would misstate any re-aggregation. That evaluation is documented separately in `power-query/merge-demo.md` and `power-query/append-demo.md` so the decision is auditable rather than assumed.
 
+### 3.4 DAX Measure Layer
+
+On top of the model, an explicit DAX measure library is defined in [`dax/measures.md`](dax/measures.md), organized into six folders:
+
+| Folder | Example measures |
+|---|---|
+| Core Catalogue KPIs | `Total Tracks`, `Total Artists`, `Total Genres`, `Tracks per Artist` |
+| Popularity Analysis | `Average Popularity`, `Median Popularity`, `Popularity Std Dev`, `% High Popularity`, `Popularity vs Catalog Average` |
+| Genre Analysis | `Genre Rank by Popularity`, `% of Total Tracks`, `Genre Performance Flag` |
+| Audio Feature Analysis | `Average Feature Score`, `Average Energy`, `Average Valence`, `Feature Score vs Catalog` |
+| Dynamic Titles & Filter-Aware UX | `Selected Genre`, `Genre Insight`, `Popularity Card Title` |
+| Top-N Helpers | `Top N Tracks (slicer-driven)`, `Artist Popularity Rank` |
+
+The design principle is **filter-context awareness**: measures such as `Popularity vs Catalog Average` and `Genre Insight` recalculate against the current slicer selection, which a static Power Query column cannot do. The library is written against the exact model column names and is paste-ready into Power BI Desktop (instructions at the top of the file). The published `.pbix` screenshots predate the measure layer and use the implicit Power Query aggregations described above; the DAX file is the explicit semantic layer defined for the model.
+
 ---
 
 ## 4. Dashboard Overview
@@ -142,11 +157,11 @@ Roughly 21% of the raw rows were duplicates. Any KPI or genre count computed bef
 
 ## 6. Limitations & Assumptions
 
-- **No DAX measures** — all figures are Power-Query-computed columns/aggregations, not DAX. This limits flexibility for anything requiring dynamic, filter-context-aware calculations (e.g., a measure that recalculates average popularity per current slicer selection independently of the physical `genre_summary` table).
+- **DAX layer is documented, not yet loaded in the published `.pbix`** — the measure library in `dax/measures.md` is defined and paste-ready, but the exported `.pbix` and its screenshots still reflect the implicit Power Query aggregations. Loading the measures is what unlocks the dynamic, filter-context-aware calculations described in [Section 3.4](#34-dax-measure-layer).
 - **No time dimension** — the source data has no reliable release-date field, so no trend-over-time analysis was attempted; the Q6 scatter plot is a snapshot, not a trend.
 - **Deduplication key is a judgment call** — `artists` + `track_name` + `album_name` was chosen after inspection, but a small number of legitimately distinct tracks (e.g., a re-recording under an identical title) could theoretically be collapsed by this rule. This was not separately audited.
 - **Popularity is a platform-provided score**, not independently validated — its underlying methodology is external to this project.
 
 ---
 
-*Supporting technical references: `power-query/transformations.md` (full transformation log), `power-query/merge-demo.md` and `power-query/append-demo.md` (technique evaluations), `dashboard/dashboard-notes.md` (design rationale).*
+*Supporting technical references: `power-query/transformations.md` (full transformation log), `power-query/merge-demo.md` and `power-query/append-demo.md` (technique evaluations), `dax/measures.md` (DAX measure library), `dashboard/dashboard-notes.md` (design rationale).*

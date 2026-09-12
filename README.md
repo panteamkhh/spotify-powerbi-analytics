@@ -1,96 +1,134 @@
+<div align="center">
+
 # 🎧 Spotify Power BI Analytics
 
-### Turning 114K raw, duplicated Spotify tracks into a clean semantic model and an interactive dashboard.
+### Turning 114K raw, duplicated Spotify tracks into a clean semantic model, a full DAX measure layer, and an interactive dark-theme dashboard.
 
-![Power BI](https://img.shields.io/badge/Power%20BI-Analytics-F2C811?logo=powerbi)
-![Type](https://img.shields.io/badge/Project-Data%20Analytics-blue)
-![Power Query](https://img.shields.io/badge/Power%20Query-M%20Language-217346?logo=powerquery)
+[![Power BI](https://img.shields.io/badge/Power_BI-Desktop-F2C811?logo=powerbi&logoColor=black)](https://powerbi.microsoft.com/)
+[![Power Query](https://img.shields.io/badge/Power_Query-M_Language-217346?logo=powerquery&logoColor=white)](power-query/transformations.md)
+[![DAX](https://img.shields.io/badge/DAX-Measure_Library-0F6CBD?logo=microsoft&logoColor=white)](dax/measures.md)
+[![Dataset](https://img.shields.io/badge/Dataset-114K_tracks-1DB954?logo=spotify&logoColor=white)](data/raw/spotify.csv)
+[![Dashboard](https://img.shields.io/badge/Dashboard-7_visuals_·_4_KPIs-8957E5)](dashboard/)
+[![Stars](https://img.shields.io/github/stars/panteamkhh/spotify-powerbi-analytics?style=social)](https://github.com/panteamkhh/spotify-powerbi-analytics)
+
+<br>
+
+<a href="dashboard/spotify-dashboard.pbix">
+  <img src="dashboard/screenshots/dashboard-overview.png" alt="Spotify Power BI Dashboard — executive view" width="100%">
+</a>
+
+**⬆️ Executive dashboard — KPI row + popularity & genre breakdown. [Open the full report ↗](dashboard/spotify-dashboard.pbix)**
+
+</div>
 
 ---
 
-## 📌 Project Overview
+## 📌 Overview
 
-An end-to-end **Power BI analytics project** built on a public Spotify tracks dataset (114,000 rows / 21 columns).
+An end-to-end **Power BI analytics project** built on a public Spotify tracks dataset (**114,000 rows × 21 columns**) — taken from raw, heavily-duplicated data all the way through to a modeled semantic layer and a business-ready dashboard.
 
-The project was built as a hands-on introduction to the Power BI ecosystem — going from raw, duplicated data all the way to a structured semantic model and an interactive dashboard. It intentionally covers the parts of the workflow that come *before* dashboarding (profiling, cleaning, reshaping, modeling), which is where most of the real analytical decisions happen.
+Unlike a "charts-only" portfolio piece, this project deliberately covers the entire analytics workflow: **profiling → cleaning → reshaping → modeling → DAX → visualization → storytelling**. Roughly **21% of the raw rows were duplicates** and had to be resolved before any number could be trusted.
 
-> **Scope note:** This project focuses on Power Query (M) and data modeling fundamentals. DAX measures/calculated columns are **not** used yet 
+<div align="center">
+
+| 89.74K | 31.43K | 113 | 33.20 |
+|:---:|:---:|:---:|:---:|
+| **Total Tracks** | **Total Artists** | **Total Genres** | **Avg. Popularity** |
+
+</div>
+
+---
+
+## 📊 Dashboard Gallery
+
+<div align="center">
+
+### Executive View
+<img src="dashboard/screenshots/dashboard-overview.png" alt="Executive dashboard view" width="100%">
+
+### Detail & Drill-down View
+<img src="dashboard/screenshots/dashboard-detail.png" alt="Dashboard detail view" width="100%">
+
+### Semantic Model (Star-schema inspired)
+<img src="dashboard/screenshots/model-view.png" alt="Power BI model view" width="70%">
+
+</div>
+
+<table>
+<tr>
+<td width="50%"><img src="dashboard/screenshots/avg-audio-feature-score.png" alt="Average audio feature score"><br><div align="center"><sub><b>Audio feature profile</b></sub></div></td>
+<td width="50%"><img src="dashboard/screenshots/energy-vs-popularity.png" alt="Energy vs popularity scatter"><br><div align="center"><sub><b>Energy vs. popularity</b></sub></div></td>
+</tr>
+<tr>
+<td width="50%"><img src="dashboard/screenshots/genre-vs-popularity.png" alt="Genre vs popularity"><br><div align="center"><sub><b>Genre performance</b></sub></div></td>
+<td width="50%"><img src="dashboard/screenshots/tracks-by-genre.png" alt="Tracks per genre"><br><div align="center"><sub><b>Catalog depth by genre</b></sub></div></td>
+</tr>
+</table>
+
+---
+
+## ✨ Highlights
+
+- 🧹 **Deduplication that mattered** — a composite key (`artists` + `track_name` + `album_name`) removed **24,039 duplicate rows**, shrinking the catalog from 114,000 → ~89,961 tracks.
+- 🏗️ **Real semantic model** — three tables kept at their natural grain and joined through relationships, not flattened Power Query merges (no row-duplication blow-up).
+- 🧮 **DAX measure layer** — a full library of filter-context-aware measures ([`dax/measures.md`](dax/measures.md)), going beyond one-time Power Query aggregations.
+- 🎨 **Designed dashboard** — dark theme, Spotify-green accent, KPI-first layout, and cross-filtering across all seven visuals.
+- 📝 **Documented decisions** — every transformation, design choice, and trade-off is written down, including *why* Merge/Append were set aside.
 
 ---
 
 ## 🧭 Project Roadmap (5 Phases)
 
-### 🟢 Phase 1 — Data Understanding & Profiling
-📂 [`power-query/transformations.md`](power-query/transformations.md)
+| Phase | Focus | Documentation |
+|---|---|---|
+| 🟢 **1 · Data Understanding** | Structure review, data-type validation, profiling, duplicate detection | [`power-query/transformations.md`](power-query/transformations.md) |
+| 🟡 **2 · Cleaning & Feature Engineering** | Deduplication, `popularity_category`, Group By, Unpivot to long format | [`power-query/transformations.md`](power-query/transformations.md) |
+| 🔵 **3 · Data Modeling** | Star-schema-inspired model, one-to-many relationships, grain separation | [`report.md`](report.md) |
+| 🟣 **4 · Dashboard Development** | 4 KPI cards, 7 business visuals, consistent dark theme | [`dashboard/dashboard-notes.md`](dashboard/dashboard-notes.md) |
+| 🟠 **5 · Insights & Storytelling** | Findings translated into plain-language business insights | [`report.md`](report.md) |
 
-- Dataset structure review (114,000 rows × 21 columns)
-- Data type validation (no issues found)
-- Column quality / distribution / profile checks
-- Statistical overview of `popularity` (min, max, mean, std dev, distinct count)
-- Duplicate detection at full-dataset and column level
+**Phase 3 deep-dive — relationships vs. flattening:**
 
-### 🟡 Phase 2 — Data Cleaning & Feature Engineering
-📂 [`power-query/transformations.md`](power-query/transformations.md)
-
-- Duplicate removal using a composite business key (`artists`, `track_name`, `album_name`)
-- Conditional column: `popularity_category` (Low / Medium / High)
-- Genre-level aggregation via Group By
-- Unpivot of 8 audio-feature columns into a long/tidy format
-
-### 🔵 Phase 3 — Data Modeling
-📂 [`report.md`](report.md)
-
-- Star-schema-inspired model with one fact table and two supporting tables
-- `spotify_clean[track_genre]` → `genre_summary[track_genre]`
-- `spotify_clean[track_id]` → `audio_features_long[track_id]`
-- One-to-many, single-direction relationships (Model view, no manual Merge joins)
-- Two supplementary technique demos included for reference:
-  - [`power-query/merge-demo.md`](power-query/merge-demo.md) — Merge Queries walkthrough
-  - [`power-query/append-demo.md`](power-query/append-demo.md) — Append Queries walkthrough
-
-### 🟣 Phase 4 — Dashboard Development
-📂 [`dashboard/`](dashboard/)
-
-- 4 executive KPI cards
-- 7 business-oriented visuals (popularity, genre, top artists/tracks, audio features)
-- Consistent dark theme, business-focused layout
-- Design rationale documented in [`dashboard/dashboard-notes.md`](dashboard/dashboard-notes.md)
-
-### 🟠 Phase 5 — Insights & Storytelling
-📂 [`report.md`](report.md)
-
-- Key findings translated into plain-language insights
-- Interpretation of genre popularity patterns and audio-feature relationships
-- Full write-up in the project report
+- [`power-query/merge-demo.md`](power-query/merge-demo.md) — Merge Queries walkthrough (evaluated, **not** applied)
+- [`power-query/append-demo.md`](power-query/append-demo.md) — Append Queries walkthrough (evaluated, **not** applied)
 
 ---
 
-## 📊 Datasets Produced
+## 🧮 DAX Measure Layer
 
-| Dataset | Description |
-|---|---|
-| `spotify_clean` | Cleaned, deduplicated fact table (~89,961 rows) |
-| `genre_summary` | Genre-level aggregated metrics (track count, avg. popularity) |
-| `audio_features_long` | Unpivoted, long-format audio feature dataset |
+The model ships with a **paste-ready DAX library** in [`dax/measures.md`](dax/measures.md), organized into six folders. A few examples:
 
----
+```dax
+Total Tracks = COUNTROWS ( spotify_clean )
 
-## 💡 Key Insights
+Average Popularity = AVERAGE ( spotify_clean[popularity] )
+```
 
-- Most tracks fall in the low-to-medium popularity range
-- Genre popularity varies significantly across the catalog
-- Audio features enable deeper track-level analysis beyond popularity alone
-- Relationships between audio features and popularity can be explored visually
-- Interactive dashboards materially speed up analytical exploration vs. static reports
+```dax
+Genre Rank by Popularity =
+RANKX ( ALL ( spotify_clean[track_genre] ), [Average Popularity], , DESC, DENSE )
+```
 
----
+```dax
+Genre Insight =
+VAR CurrentGenre = SELECTEDVALUE ( spotify_clean[track_genre] )
+VAR GenreAvg = [Average Popularity]
+VAR CatalogAvg =
+    CALCULATE ( [Average Popularity], ALL ( spotify_clean[track_genre] ) )
+RETURN
+    IF (
+        ISBLANK ( CurrentGenre ),
+        "Select a genre to see its performance against the catalog average.",
+        CurrentGenre & " averages " & FORMAT ( GenreAvg, "0.0" )
+            & " popularity — "
+            & IF ( GenreAvg >= CatalogAvg, "above", "below" )
+            & " the catalog average of " & FORMAT ( CatalogAvg, "0.0" ) & "."
+    )
+```
 
-## 🛠️ Tools Used
+**What's inside:** core KPIs · popularity distributions · genre ranking & dynamic labels · per-feature audio measures · filter-aware UX measures · Top-N helpers, plus suggested format strings.
 
-- Power BI Desktop
-- Power Query (M Language)
-- Excel / CSV Dataset
-- Git & GitHub
+> **Note:** the measures are documented as the model's explicit DAX layer and can be pasted into Power BI Desktop in a few minutes (instructions at the top of the file). The published `.pbix` currently relies on the implicit Power Query aggregations captured in the screenshots above.
 
 ---
 
@@ -100,21 +138,80 @@ The project was built as a hands-on introduction to the Power BI ecosystem — g
 spotify-powerbi-analytics/
 │
 ├── data/
-│   └── spotify.csv
+│   └── raw/
+│       └── spotify.csv              # 114,000 × 21 source dataset
 │
 ├── power-query/
-│   ├── append-demo.md
-│   ├── merge-demo.md
-│   └── transformations.md
+│   ├── transformations.md           # Full cleaning & reshaping log
+│   ├── merge-demo.md                # Merge Queries — evaluated, not applied
+│   └── append-demo.md               # Append Queries — evaluated, not applied
+│
+├── dax/
+│   └── measures.md                  # Paste-ready DAX measure library
 │
 ├── dashboard/
-│   ├── spotify-dashboard.pbix
-│   ├── screenshots/
-│   └── dashboard-notes.md
+│   ├── spotify-dashboard.pbix       # Power BI report file
+│   ├── dashboard-notes.md           # Design rationale per visual
+│   └── screenshots/                 # Exported page & visual views
 │
-├── report.md
+├── report.md                        # Full analytics case-study report
 └── README.md
 ```
 
 ---
 
+## 🛠️ Tech Stack
+
+| Layer | Tool |
+|---|---|
+| BI & Visualization | Power BI Desktop |
+| Data Transformation | Power Query (M Language) |
+| Semantics | DAX |
+| Source Data | CSV (Spotify Tracks dataset) |
+| Version Control | Git & GitHub |
+
+---
+
+## 🚀 Getting Started
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/panteamkhh/spotify-powerbi-analytics.git
+   ```
+2. **Open the report** — launch `dashboard/spotify-dashboard.pbix` in [Power BI Desktop](https://powerbi.microsoft.com/desktop/).
+3. **Explore the model** — switch to *Model view* to see the two one-to-many relationships.
+4. **Activate the DAX layer** — paste the measures from [`dax/measures.md`](dax/measures.md) via *Modeling → New measure*.
+5. **Read the story** — start with [`report.md`](report.md) for the full findings.
+
+---
+
+## 💡 Key Insights
+
+- **Popularity is long-tailed, not evenly spread** — a mean of **33.2** against a 0–100 scale means most tracks sit well below the midpoint.
+- **Genre is a real differentiator** — genre averages split persistently above and below the catalog-wide mean, making genre the best first filter.
+- **Audio-feature profiles cluster by genre** — the unpivoted long table lets all eight features be compared across genres in a single matrix.
+- **No single audio feature explains popularity** — the scatter plot shows loose, non-linear tendencies at best, pointing to drivers outside this dataset (artist reach, playlist placement, release timing).
+- **Deduplication changed the numbers that matter** — 21% of raw rows were duplicates; any pre-clean KPI would have overstated the catalog.
+
+Full analysis in [`report.md`](report.md) → [Section 5](report.md#5-key-findings).
+
+---
+
+## 📚 Documentation Index
+
+| Document | What it covers |
+|---|---|
+| [`report.md`](report.md) | Full case study: methodology, findings, limitations |
+| [`power-query/transformations.md`](power-query/transformations.md) | Step-by-step Power Query log |
+| [`power-query/merge-demo.md`](power-query/merge-demo.md) | Merge Queries technique reference |
+| [`power-query/append-demo.md`](power-query/append-demo.md) | Append Queries technique reference |
+| [`dax/measures.md`](dax/measures.md) | DAX measure library |
+| [`dashboard/dashboard-notes.md`](dashboard/dashboard-notes.md) | Visual-by-visual design rationale |
+
+---
+
+<div align="center">
+
+**Built by [panteamkhh](https://github.com/panteamkhh)** · If you found this project useful, consider giving it a ⭐
+
+</div>

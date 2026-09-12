@@ -225,6 +225,6 @@ Dashboard implementation, KPI creation, and visualization design are documented 
 - `../README.md` (Phase 4 — Dashboard Development)
 - `../dashboard/dashboard-notes.md` (design rationale)
 
-No additional Power Query transformations were applied during the dashboard development stage. DAX was not used anywhere in this phase or the modeling phase above — every field here is a Power Query column or aggregation, called out explicitly in `../report.md` (Section 6 — Limitations & Assumptions).
+No additional Power Query transformations were applied during the dashboard development stage. The analytical measures that sit on top of this model are DAX (not Power Query) and are documented separately in `../dax/measures.md` — keeping the transformation log focused on data preparation and the measure layer focused on filter-context calculations.
 
 ---

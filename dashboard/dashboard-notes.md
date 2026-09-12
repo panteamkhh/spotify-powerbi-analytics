@@ -16,13 +16,33 @@ Supplementary notes for `spotify-dashboard.pbix`, expanding on the Phase 4 summa
 
 | Element | Choice |
 |---|---|
-| Background | Dark theme (near-black) |
-| Accent palette | Spotify-inspired green, with 2–3 supporting neutrals for contrast |
+| Background | Light neutral canvas with **dark (near-black) KPI cards and chart containers** for contrast |
+| Accent palette | Spotify-inspired green (`#1DB954`), with 2–3 supporting neutrals |
 | Typography | Single consistent font family across all visuals; larger weight for KPI numbers, lighter weight for labels |
 | Chart borders | Minimal / none — separation via spacing and background contrast instead of boxes |
 | Data labels | Shown only where they aid reading (e.g., top bars); suppressed where they'd clutter (e.g., scatter plot) |
 
-**Rationale:** a dark theme with a single accent color reads as "product dashboard" rather than "default Power BI report," and reduces visual competition between the 7 visuals on one page.
+**Rationale:** dark containers over a light canvas keep the four KPI numbers as the most prominent element without turning the whole page into a low-contrast dark theme, and the single green accent reads as a product dashboard rather than a default Power BI report.
+
+---
+
+## 🧮 DAX Measures
+
+The dashboard's explicit measure layer is documented in [`../dax/measures.md`](../dax/measures.md). Key measures mapped to the visuals:
+
+| Visual | Measure(s) |
+|---|---|
+| KPI · Total Tracks / Artists / Genres | `Total Tracks`, `Total Artists`, `Total Genres` |
+| KPI · Average Popularity | `Average Popularity` |
+| Q1 · Popularity Distribution | `High/Medium/Low Popularity Tracks`, `% High Popularity` |
+| Q2 · Genre Analysis | `Genre Rank by Popularity`, `Genre Performance Flag` |
+| Q3 · Top Artists | `Artist Popularity Rank` |
+| Q5 · Audio Feature Comparison | `Average Feature Score` + per-feature measures |
+| Q6 · Energy vs Popularity | `Popularity vs Catalog Average` |
+| Dynamic labels | `Selected Genre`, `Genre Insight` |
+
+> The published `.pbix` screenshots use implicit Power Query aggregations; pasting the measures above upgrades the cards and titles to filter-context-aware versions.
+
 
 ---
 
@@ -67,7 +87,20 @@ Placed top-of-page, left-to-right, so scale (tracks/artists/genres) is establish
 
 ##  Screenshots
 
-See `screenshots/` for exported page views. (Add updated exports here whenever the dashboard visuals change materially.)
+See `screenshots/` for exported page views. Current exports:
+
+| File | View |
+|---|---|
+| `dashboard-overview.png` | Executive page — KPI row + popularity & genre |
+| `dashboard-detail.png` | Detail page — top tracks, genre matrix, scatter |
+| `model-view.png` | Semantic model / relationships |
+| `avg-audio-feature-score.png` | Audio feature comparison |
+| `energy-vs-popularity.png` | Energy vs. popularity scatter |
+| `genre-vs-popularity.png` | Genre performance |
+| `tracks-by-genre.png` | Catalog depth by genre |
+
+(Add updated exports here whenever the dashboard visuals change materially.)
+
 
 ---
 
