@@ -43,12 +43,6 @@ Unlike a "charts-only" portfolio piece, this project deliberately covers the ent
 
 <div align="center">
 
-### Executive View
-<img src="dashboard/screenshots/dashboard-overview.png" alt="Executive dashboard view" width="100%">
-
-### Detail & Drill-down View
-<img src="dashboard/screenshots/dashboard-detail.png" alt="Dashboard detail view" width="100%">
-
 ### Semantic Model (Star-schema inspired)
 <img src="dashboard/screenshots/model-view.png" alt="Power BI model view" width="70%">
 
