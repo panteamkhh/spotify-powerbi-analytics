@@ -70,6 +70,25 @@ Max Popularity = MAX ( spotify_clean[popularity] )
 Popularity Std Dev = STDEV.S ( spotify_clean[popularity] )
 ```
 
+> ⚠️ **`popularity_category` definition** — the model uses **Low = 0–30, Medium = 31–69, High = 70–100**. If it is built in Power Query, apply this rule there; as a DAX calculated column:
+>
+> ```dax
+> popularity_category =
+> SWITCH (
+>     TRUE (),
+>     spotify_clean[popularity] <= 30, "low",
+>     spotify_clean[popularity] <= 69, "medium",
+>     "high"
+> )
+> ```
+>
+> ```dax
+> popularity_category_order =
+> SWITCH ( spotify_clean[popularity_category], "low", 1, "medium", 2, "high", 3 )
+> ```
+>
+> Then set **Sort by column** for `popularity_category` → `popularity_category_order` so the donut legend reads Low → Medium → High. (An earlier build had the Low/Medium labels swapped — see [`../dashboard/data-validation.md`](../dashboard/data-validation.md).)
+
 ```dax
 High Popularity Tracks =
 CALCULATE ( [Total Tracks], spotify_clean[popularity_category] = "high" )
